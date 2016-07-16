@@ -7,7 +7,7 @@ import java.io.Reader;
 /**
  * Created by edavidovich on 6/25/16.
  */
-public class Base64DecodingFilter extends FilterReader {
+public class Base64DecodingFilter extends AbstractFilter {
 
     private static final String CODES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -61,24 +61,4 @@ public class Base64DecodingFilter extends FilterReader {
         }
         return -1; //this should never happen
     }
-
-
-    public int read(char[] cbuf) throws IOException {
-        return read(cbuf,0,1);
-    }
-
-    public int read(char[] cbuf,
-                    int off,
-                    int len)
-            throws IOException {
-        int c = read();
-        if (c!=-1) {
-            cbuf[off] = (char)c;
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-
 }
