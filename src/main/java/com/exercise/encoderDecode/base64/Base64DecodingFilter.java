@@ -1,0 +1,84 @@
+package com.exercise.encoderDecode.base64;
+
+import java.io.FilterReader;
+import java.io.IOException;
+import java.io.Reader;
+
+/**
+ * Created by edavidovich on 6/25/16.
+ */
+public class Base64DecodingFilter extends FilterReader {
+
+    private static final String CODES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+    int buffer; //remaining bits from last read
+    int length = 0; //number of bits remained in buffer
+
+
+    public Base64DecodingFilter(Reader in) {
+        super(in);
+    }
+
+    public int read() throws IOException {
+        if (length==0) {
+            int next = super.read();
+            int next2 = super.read();
+            if (next == -1 || next == CODES.charAt(64)) {
+                return -1;
+            } else if (next2 == -1 || next2 == CODES.charAt(64)) {
+                return (char)CODES.indexOf((char)next);
+            } else {
+                int idx = CODES.indexOf((char)next);
+                int idx2 = CODES.indexOf((char)next2);
+                int value = (idx << 2) | (idx2 >> 4);
+                buffer = idx2 & 0x0F;
+                length = 4;
+                return (char)value;
+            }
+        } else if (length==4) {
+            int next = super.read();
+            if (next == -1 || next == CODES.charAt(64)) {
+                length = 0;
+                return -1;
+            } else {
+                int idx = CODES.indexOf((char)next);
+                int value = (buffer << 4) | (idx >> 2);
+                length = 2;
+                buffer = idx & 0x03;
+                return (char)value;
+            }
+        } else if (length==2) {
+            int next = super.read();
+            if (next == -1 || next == CODES.charAt(64)) {
+                length = 0;
+                return -1;
+            } else {
+                int idx = CODES.indexOf((char)next);
+                int value = (buffer << 6) | idx;
+                length = 0;
+                return (char)value;
+            }
+        }
+        return -1; //this should never happen
+    }
+
+
+    public int read(char[] cbuf) throws IOException {
+        return read(cbuf,0,1);
+    }
+
+    public int read(char[] cbuf,
+                    int off,
+                    int len)
+            throws IOException {
+        int c = read();
+        if (c!=-1) {
+            cbuf[off] = (char)c;
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+
+}
