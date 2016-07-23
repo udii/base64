@@ -3,6 +3,7 @@ import com.exercise.encoderDecode.EncoderInterface;
 import com.exercise.encoderDecode.base64.Base64Decoder;
 import com.exercise.encoderDecode.base64.Base64Encoder;
 import com.exercise.encoderDecode.base64.Base64EncodingFilter;
+import com.exercise.encoderDecode.EncoderDecoderFactory;
 import org.apache.commons.io.IOUtils;
 import org.junit.*;
 
@@ -17,6 +18,20 @@ public class Base64Test {
      *
      */
 
+//create a base 64 encoder
+    //EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
+
+    //create a base 64 decoder
+    //DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
+
+    String CUSTOM_CODE="1234567890!@#$%^&*()qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcv="; //any 65 chars
+
+    //create a custom 64 encoder
+    //EncoderInterface encoder = EncoderDecoderFactory.getCustom64Encoder(CUSTOM_CODE);
+
+    //create a custom 64 decoder
+    //DecoderInterface decoder = EncoderDecoderFactory.getCustom64Decoder(CUSTOM_CODE);
+
 
     @Test
     public void encodeDecodeStreamTest() {
@@ -26,8 +41,8 @@ public class Base64Test {
         System.out.println("Input: "+input);
         Reader plain = new StringReader(input);
         //TODO: move the common test setup to a setup method
-        EncoderInterface encoder = new Base64Encoder();
-        DecoderInterface decoder = new Base64Decoder();
+        EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
         Reader decoded = decoder.decode(encoder.encode(plain));
         try {
             Reader expected = new StringReader(input);
@@ -47,8 +62,7 @@ public class Base64Test {
         String input = "any carnal pleasure.";
         System.out.println("Input: "+input);
         Reader plain = new StringReader(input);
-        EncoderInterface encoder = new Base64Encoder();
-//        DecoderInterface decoder = new Base64Decoder();
+        EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
         Reader encoded = encoder.encode(plain);
         String result = null;
         try {
@@ -59,9 +73,6 @@ public class Base64Test {
         }
         System.out.println("Encoded: "+result);
         Assert.assertEquals("YW55IGNhcm5hbCBwbGVhc3VyZS4=",result);
-//        byte[] decoded = decoder.decode(encoded);
-//        System.out.println("Decoded: "+new String(decoded));
-//        Assert.assertArrayEquals(input,decoded);
         System.out.println("");
     }
 
@@ -72,7 +83,7 @@ public class Base64Test {
         String input = "a";
         System.out.println("Input: "+input);
         Reader plain = new StringReader(input);
-        EncoderInterface encoder = new Base64Encoder();
+        EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
         Reader encoded = encoder.encode(plain);
         String result = null;
         try {
@@ -93,8 +104,7 @@ public class Base64Test {
         String input = "YW55IGNhcm5hbCBwbGVhc3VyZS4=";
         System.out.println("Input: "+input);
         Reader code = new StringReader(input);
-        //EncoderInterface encoder = new Base64Encoder();
-        DecoderInterface decoder = new Base64Decoder();
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
         Reader decoded = decoder.decode(code);
         String result = null;
         try {
@@ -105,9 +115,6 @@ public class Base64Test {
         }
         System.out.println("Decoded: "+result);
         Assert.assertEquals("any carnal pleasure.",result);
-//        byte[] decoded = decoder.decode(encoded);
-//        System.out.println("Decoded: "+new String(decoded));
-//        Assert.assertArrayEquals(input,decoded);
         System.out.println("");
     }
 
@@ -119,8 +126,7 @@ public class Base64Test {
         String input = "YQ==";
         System.out.println("Input: "+input);
         Reader code = new StringReader(input);
-        //EncoderInterface encoder = new Base64Encoder();
-        DecoderInterface decoder = new Base64Decoder();
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
         Reader decoded = decoder.decode(code);
         String result = null;
         try {
@@ -131,9 +137,6 @@ public class Base64Test {
         }
         System.out.println("Decoded: "+result);
         Assert.assertEquals("a",result);
-//        byte[] decoded = decoder.decode(encoded);
-//        System.out.println("Decoded: "+new String(decoded));
-//        Assert.assertArrayEquals(input,decoded);
         System.out.println("");
     }
 
