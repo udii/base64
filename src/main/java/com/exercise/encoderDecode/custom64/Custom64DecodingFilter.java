@@ -1,22 +1,22 @@
-package com.exercise.encoderDecode.base64;
+package com.exercise.encoderDecode.custom64;
 
-import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 
 /**
  * Created by edavidovich on 6/25/16.
  */
-public class Base64DecodingFilter extends AbstractFilter {
+public class Custom64DecodingFilter extends AbstractFilter {
 
-    private static final String CODES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    private String CODES;
 
     int buffer; //remaining bits from last read
     int length = 0; //number of bits remained in buffer
 
 
-    public Base64DecodingFilter(Reader in) {
+    public Custom64DecodingFilter(Reader in, String code) {
         super(in);
+        CODES = code;
     }
 
     public int read() throws IOException {

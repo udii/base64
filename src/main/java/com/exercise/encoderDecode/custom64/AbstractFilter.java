@@ -1,4 +1,4 @@
-package com.exercise.encoderDecode.base64;
+package com.exercise.encoderDecode.custom64;
 
 import java.io.FilterReader;
 import java.io.IOException;

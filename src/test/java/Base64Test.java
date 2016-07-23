@@ -1,8 +1,5 @@
 import com.exercise.encoderDecode.DecoderInterface;
 import com.exercise.encoderDecode.EncoderInterface;
-import com.exercise.encoderDecode.base64.Base64Decoder;
-import com.exercise.encoderDecode.base64.Base64Encoder;
-import com.exercise.encoderDecode.base64.Base64EncodingFilter;
 import com.exercise.encoderDecode.EncoderDecoderFactory;
 import org.apache.commons.io.IOUtils;
 import org.junit.*;
