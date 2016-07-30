@@ -252,8 +252,7 @@ public class Base64Test {
 
     @Test
     public void mytest2() {
-        //String input = "ñ, é, è, ç";
-        String input = "π";
+        String input = "ñ, é, è, ç, π";
         Reader plain = new StringReader(input);
         EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
         Reader encoded = encoder.encode(plain);
@@ -270,15 +269,13 @@ public class Base64Test {
     }
 
     @Test
-    public void testPi() {
+    public void testPi2() {
         System.out.println("");
         System.out.println("Short Input Stream Test:");
         String input = "π";
         System.out.println("Input: "+input);
-        //Reader plain = new StringReader(input);
+        Reader plain = new StringReader(input);
         try {
-            byte[] bytes = input.getBytes("UTF-8");
-            Reader plain = new InputStreamReader(new ByteArrayInputStream(bytes),"ISO-8859-1");
             EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
             Reader encoded = encoder.encode(plain);
             String result = null;

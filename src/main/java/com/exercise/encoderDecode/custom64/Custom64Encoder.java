@@ -2,8 +2,9 @@ package com.exercise.encoderDecode.custom64;
 
 import com.exercise.encoderDecode.EncoderInterface;
 
-import java.io.Reader;
+import java.io.*;
 
+import org.apache.commons.io.input.*;
 /**
  * Created by edavidovich on 6/18/16.
  */
@@ -13,6 +14,13 @@ public class Custom64Encoder implements EncoderInterface {
         CODE=code;
     }
     public Reader encode(Reader in) {
-        return new Custom64EncodingFilter(in,CODE);
+        InputStream r = new ReaderInputStream(in, "UTF-8");
+        Reader plain = null;
+        try {
+            plain = new InputStreamReader(r,"ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return new Custom64EncodingFilter(plain,CODE);
     }
 }
