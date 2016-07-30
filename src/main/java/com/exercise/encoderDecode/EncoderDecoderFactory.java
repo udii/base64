@@ -12,7 +12,7 @@ import java.util.HashSet;
  */
 public class EncoderDecoderFactory {
     private static final String BASE64_CODE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    private static final String MY_CODE = "1234567890!@#$%^&*()qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcv="; //any 65 chars
+    private static final String MY_CODE = "1234567890!@#$%^&*()qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbn="; //any 65 chars
 
     /**
      * Create a base64 encoder

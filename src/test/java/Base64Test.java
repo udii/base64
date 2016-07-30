@@ -15,19 +15,7 @@ public class Base64Test {
      *
      */
 
-//create a base 64 encoder
-    //EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
-
-    //create a base 64 decoder
-    //DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
-
-    String CUSTOM_CODE="1234567890!@#$%^&*()qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcv="; //any 65 chars
-
-    //create a custom 64 encoder
-    //EncoderInterface encoder = EncoderDecoderFactory.getCustom64Encoder(CUSTOM_CODE);
-
-    //create a custom 64 decoder
-    //DecoderInterface decoder = EncoderDecoderFactory.getCustom64Decoder(CUSTOM_CODE);
+    private static final String CODE = "qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM1092837465$-="; //any 65 chars
 
 
     @Test
@@ -37,7 +25,6 @@ public class Base64Test {
         String input = "john";
         System.out.println("Input: "+input);
         Reader plain = new StringReader(input);
-        //TODO: move the common test setup to a setup method
         EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
         DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
         Reader decoded = decoder.decode(encoder.encode(plain));
@@ -72,6 +59,87 @@ public class Base64Test {
         Assert.assertEquals("YW55IGNhcm5hbCBwbGVhc3VyZS4=",result);
         System.out.println("");
     }
+
+    @Test
+    public void encoderDecoderCustomEncoder() {
+        System.out.println("");
+        System.out.println("Encode Known Input Stream Test with new Code: ");
+        String input = "any carnal pleasure.";
+        System.out.println("Input: "+input);
+        Reader plain = new StringReader(input);
+        EncoderInterface encoder = EncoderDecoderFactory.getMy64Encoder();
+        Reader encoded = encoder.encode(plain);
+        String result = null;
+        try {
+            result = IOUtils.toString(encoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Encoded: "+result);
+        System.out.println("");
+    }
+
+    @Test
+    public void encoderDecoderCustomDecoder() {
+        System.out.println("");
+        System.out.println("Decode Known Input Stream Test with new Code: ");
+        String input = "teLL97$RoOLRi32li7wRoJwSy(K=";
+        System.out.println("Input: "+input);
+        Reader plain = new StringReader(input);
+        DecoderInterface decoder = EncoderDecoderFactory.getMy64Decoder();
+        Reader decoded = decoder.decode(plain);
+        String result = null;
+        try {
+            result = IOUtils.toString(decoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Decoded: "+result);
+        System.out.println("");
+    }
+
+    @Test
+    public void encoderDecoderNewCustomEncoder() {
+        System.out.println("");
+        System.out.println("Encode Known Input Stream Test with Brand new Code: ");
+        String input = "any carnal pleasure.";
+        System.out.println("Input: "+input);
+        Reader plain = new StringReader(input);
+        EncoderInterface encoder = EncoderDecoderFactory.getCustom64Encoder(CODE);
+        Reader encoded = encoder.encode(plain);
+        String result = null;
+        try {
+            result = IOUtils.toString(encoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Encoded: "+result);
+        System.out.println("");
+    }
+
+    @Test
+    public void encoderDecoderNewCustomDecoder() {
+        System.out.println("");
+        System.out.println("Decode Known Input Stream Test with Brand new Code: ");
+        String input = "gd33ouRGlz3GkewVkusGl2sNhO8=";
+        System.out.println("Input: "+input);
+        Reader plain = new StringReader(input);
+        DecoderInterface decoder = EncoderDecoderFactory.getCustom64Decoder(CODE);
+        Reader decoded = decoder.decode(plain);
+        String result = null;
+        try {
+            result = IOUtils.toString(decoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Decoded: "+result);
+        System.out.println("");
+    }
+
 
     @Test
     public void shortInputTwoEqualsStreamTest() {
@@ -112,6 +180,27 @@ public class Base64Test {
         }
         System.out.println("Decoded: "+result);
         Assert.assertEquals("any carnal pleasure.",result);
+        System.out.println("");
+    }
+
+
+    @Test
+    public void encoderDecoderOutputStreamTest() {
+        System.out.println("");
+        System.out.println("Decode an Unknown Output Stream Test: ");
+        String input = "VGhpcyBpcyBhbiBBcnhhbiBzYW1wbGUgc3RyaW5nIHRoYXQgc2hvdWxkIGJlIGVhc2lseSBkZWNvZGVkIGZyb20gYmFzZTY0LiAgSXQgaW5jbHVkZXMgYSBudW1iZXIgb2YgVVRGOCBjaGFyYWN0ZXJzIHN1Y2ggYXMgdGhlIPEsIOksIOgsIOcgYW5kICYjOTYwOyBjaGFyYWN0ZXJzLg==";
+        System.out.println("Input: "+input);
+        Reader code = new StringReader(input);
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
+        Reader decoded = decoder.decode(code);
+        String result = null;
+        try {
+            result = IOUtils.toString(decoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Decoded: "+result);
         System.out.println("");
     }
 
