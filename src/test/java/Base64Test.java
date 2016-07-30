@@ -78,6 +78,7 @@ public class Base64Test {
         }
         System.out.println("Encoded: "+result);
         System.out.println("");
+        //TODO need to assert
     }
 
     @Test
@@ -98,6 +99,7 @@ public class Base64Test {
         }
         System.out.println("Decoded: "+result);
         System.out.println("");
+        //TODO need to assert
     }
 
     @Test
@@ -118,6 +120,7 @@ public class Base64Test {
         }
         System.out.println("Encoded: "+result);
         System.out.println("");
+        //TODO need to assert
     }
 
     @Test
@@ -138,6 +141,8 @@ public class Base64Test {
         }
         System.out.println("Decoded: "+result);
         System.out.println("");
+        //TODO need to assert
+
     }
 
 
@@ -204,7 +209,6 @@ public class Base64Test {
         System.out.println("");
     }
 
-
     @Test
     public void encoderDecoderKnownShortOutputStreamTest() {
         System.out.println("");
@@ -224,6 +228,68 @@ public class Base64Test {
         System.out.println("Decoded: "+result);
         Assert.assertEquals("a",result);
         System.out.println("");
+    }
+
+    @Test
+    public void mytest() {
+        System.out.println("");
+        System.out.println("Decode an Unknown Output Stream Test: ");
+        String input = "VGhpcyBpcyBhbiBBcnhhbiBzYW1wbGUgc3RyaW5nIHRoYXQgc2hvdWxkIGJlIGVhc2lseSBkZWNvZGVkIGZyb20gYmFzZTY0LiAgSXQgaW5jbHVkZXMgYSBudW1iZXIgb2YgVVRGOCBjaGFyYWN0ZXJzIHN1Y2ggYXMgdGhlIPEsIOksIOgsIOcgYW5kICYjOTYwOyBjaGFyYWN0ZXJzLg==";
+        System.out.println("Input: "+input);
+        Reader code = new StringReader(input);
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
+        Reader decoded = decoder.decode(code);
+        String result = null;
+        try {
+            result = IOUtils.toString(decoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Decoded: "+result);
+        System.out.println("");
+    }
+
+    @Test
+    public void mytest2() {
+        //String input = "ñ, é, è, ç";
+        String input = "π";
+        Reader plain = new StringReader(input);
+        EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
+        Reader encoded = encoder.encode(plain);
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
+        Reader decoded = decoder.decode(encoded);
+        String result = null;
+        try {
+            result = IOUtils.toString(decoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        Assert.assertEquals(input,result);
+    }
+
+    @Test
+    public void testPi() {
+        System.out.println("");
+        System.out.println("Short Input Stream Test:");
+        String input = "π";
+        System.out.println("Input: "+input);
+        //Reader plain = new StringReader(input);
+        try {
+            byte[] bytes = input.getBytes("UTF-8");
+            Reader plain = new InputStreamReader(new ByteArrayInputStream(bytes),"ISO-8859-1");
+            EncoderInterface encoder = EncoderDecoderFactory.getBase64Encoder();
+            Reader encoded = encoder.encode(plain);
+            String result = null;
+            result = IOUtils.toString(encoded);
+            System.out.println("Encoded: "+result);
+            Assert.assertEquals("z4A=",result);
+            System.out.println("");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 
 }
