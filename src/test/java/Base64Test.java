@@ -251,6 +251,47 @@ public class Base64Test {
     }
 
     @Test
+    public void mytest4() {
+        System.out.println("");
+        System.out.println("Decode an Unknown Output Stream Test: ");
+        String input = "VGhpcyBpcyBhbiBBcnhhbiBzYW1wbGUgc3RyaW5nIHRoYXQgc2hvdWxkIGJlIGVhc2lseSBkZWNvZGVkIGZyb20gYmFzZTY0LiAgSXQgaW5jbHVkZXMgYSBudW1iZXIgb2YgVVRGOCBjaGFyYWN0ZXJzIHN1Y2ggYXMgdGhlIPEsIOksIOgsIOcgYW5kICYjOTYwOyBjaGFyYWN0ZXJzLg==";
+        System.out.println("Input: "+input);
+        Reader code = new StringReader(input);
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder("ISO-8859-1");
+        Reader decoded = decoder.decode(code);
+        String result = null;
+        try {
+            result = IOUtils.toString(decoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Decoded: "+result);
+        System.out.println("");
+    }
+
+    @Test
+    public void mytest3() {
+        System.out.println("");
+        System.out.println("Decode an Unknown Output Stream Test: ");
+        String input = "w7EsIMOpLCDDqCwgw6csIM+A";
+        System.out.println("Input: "+input);
+        Reader code = new StringReader(input);
+        DecoderInterface decoder = EncoderDecoderFactory.getBase64Decoder();
+        Reader decoded = decoder.decode(code);
+        String result = null;
+        try {
+            result = IOUtils.toString(decoded);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+        System.out.println("Decoded: "+result);
+        System.out.println("");
+    }
+
+
+    @Test
     public void mytest2() {
         String input = "ñ, é, è, ç, π";
         Reader plain = new StringReader(input);

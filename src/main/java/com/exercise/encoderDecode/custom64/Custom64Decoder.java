@@ -13,15 +13,21 @@ import java.io.UnsupportedEncodingException;
  */
 public class Custom64Decoder implements DecoderInterface {
     private String CODE;
+    private String charset;
+
     public Custom64Decoder(String code) {
-        CODE=code;
+        this(code,"UTF-8");
+    }
+    public Custom64Decoder(String code, String charset) {
+        this.CODE=code;
+        this.charset=charset;
     }
     public Reader decode(Reader in) {
         Reader out = new Custom64DecodingFilter(in,CODE);
         InputStream r = new ReaderInputStream(out, "ISO-8859-1");
         Reader plain = null;
         try {
-            plain = new InputStreamReader(r,"UTF-8");
+            plain = new InputStreamReader(r,charset);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

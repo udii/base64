@@ -30,6 +30,10 @@ public class EncoderDecoderFactory {
         return new Custom64Decoder(BASE64_CODE);
     }
 
+    public static DecoderInterface getBase64Decoder(String charset) {
+        return new Custom64Decoder(BASE64_CODE, charset);
+    }
+
     /**
      * Create a my64 encoder
      * @return a my64 encoder

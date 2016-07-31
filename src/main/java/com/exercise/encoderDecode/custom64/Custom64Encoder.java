@@ -14,7 +14,7 @@ public class Custom64Encoder implements EncoderInterface {
         CODE=code;
     }
     public Reader encode(Reader in) {
-        InputStream r = new ReaderInputStream(in, "UTF-8");
+        InputStream r = new ReaderInputStream(in);
         Reader plain = null;
         try {
             plain = new InputStreamReader(r,"ISO-8859-1");
